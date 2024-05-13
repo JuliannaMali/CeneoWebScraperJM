@@ -2,24 +2,31 @@
 
 {% block content %}
 
-    <div class="container-fluid custom-container">
-        <div class="row">
+    <form action="{{url_for('extract')}}"  method="POST">
+        <div class="row g-3 align-items-center">
 
-            <div class="col-sm-3 mt-2 d-flex justify-content-center align-items-center">
-                <div class="list-group text-center m-auto mb-2 mt-4 shadow-lg">
-                    <h2 class="text-center">Spis treści:</h2>
-                        <a href="#" class="list-group-item list-group-item-action">Strona Główna</a>
-                        <a href="#" class="list-group-item list-group-item-action">Ekstrakcja opinii</a>
-                        <a href="#" class="list-group-item list-group-item-action">Produkty</a>
-                        <a href="#" class="list-group-item list-group-item-action">Opinia o produkcie {{product_id}}</a>
-                        <a href="#" class="list-group-item list-group-item-action">O autorze</a>                    
-                </div>
+            <div class="col-auto">
+                <label for="product_id" class="col-form-label">Kod produktu</label>
             </div>
-            <div class="col-sm-7 mt-2 row align-items-center">
-                <p>To jest strona ekstrakcji opinii.</p>
+            <div class="col-auto">
+                <input  type="text" name="product_id" id="product_id"  class="form-control" required aria-describedby="product_idHelpInline" placeholder="Podaj kod produktu">
             </div>
-
+            <div class="col-auto">
+                <span id="product_idHelpInline" class="form-text">
+                    Kod produktu musi zawierać od 8-10 cyfr
+                </span>
+            </div>
         </div>
-    </div>
-    
+        <button type="submit" class="btn btn-secondary mt-3">Pobierz opinie</button>
+    </form>
+   
+   {% if error is defined%}
+
+        <div  class="alert alert-dismissible fade show" role="alert">
+            <strong>Uwaga!</strong> {{error}}
+            <button type="button" class="btn-close" data-bs-dismmiss="alert" aria-label="Close"></button>
+        </div>
+
+   {% endif %}
+
 {% endblock %}
