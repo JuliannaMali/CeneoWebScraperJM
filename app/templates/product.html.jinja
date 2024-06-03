@@ -4,17 +4,10 @@
 
     <p>To jest strona z opiniami o produkcie {{product_id}}.</p>
 
-{#    <table class="table">
-    <th><td>Rekomendacja</td><td>Ocena</td><td>Kontent</td><td>Zalety</td><td>Wady</td><td>Przydatny</td><td>Nieprzydatny</td></th>
-
-    {%for i in products%}
-        {%for key, value in i.items()%}
-            {%if key == 'product_id' and value == product_id%}
-                <tr>{{recommendation}}<td></td><td></td><td>fajne</td><td></td><td></td><td></td><td></td></tr>
-            {%endif%}
-        {%endfor%}
-    {%endfor%}
-
-    </table>#}
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a type="button" class="btn" href="{{url_for('download_json', product_id=product_id)}}">JSON</a>
+        <a type="button" class="btn" href="{{url_for('download_csv', product_id=product_id)}}">CSV</a>
+        <a type="button" class="btn" href="{{url_for('download_xlsx', product_id=product_id)}}">XLSX</a>
+    </div>
     
 {% endblock %}
