@@ -5,5 +5,26 @@
 {% endblock%}
 
 {% block content %}
-    {{products}}
+    {#{{products}}#}
+    
+    {% for i in products%}
+    <table class="table mt-3 mb-3">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Atrybuty produktu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in i.items() %}
+                <tr>
+                    <td> {{ key }} </td>
+                    <td> {{ value }} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {#<button class="button" onclick="app\routes.py\download_json">JSON</button>#}
+
+    {% endfor%}
 {% endblock %}
