@@ -2,6 +2,33 @@
 
 {% block content %}
 
-    <p>To jest strona główna.</p>
+    <p>Celem aplikacji Ceneo Web Scraper jest ekstrakcja opinii dotyczących konkretnego produktu ze strony Ceneo.pl i przedstawienie ich w skondensowanej formie.</p>
+    <p>Aplikacja pobiera opinie po wpisaniu konkretnego kodu produktu w zakładce 'Ekstrakcja opinii', następnie podsumowywuje wszystkie opinie (np. ich liczbę, liczbę pozytywów/negatywów, średnią ocenę, itp.) w tabeli, w zakłądce "Produkty". Każde ID produktu prowadzi do osobnej podstrony, na której przedstawione są wszystkie opinie dotyczące tego produktu, jak i również znajduje się na nim przycik przenoszący do podstrony z wykresami analizującymi konkretne części ocen, oraz są 3 przyciski do pobrania wszystkich opinii w pliku JSON, CSV bądź XLSX. Na podstronie z wykresami znajdują sie dwa wykresy, kołowy (przedstawiający udział poszczególnych rekomendacji w ogólnej liczbie opinii) oraz słupkowy (przedstawiający liczbę opinii z poszczególnymi gwiazdakmi)</p>
+    
+    <table class="table mt-3 mb-3">
+        <thead>
+            <th>Zastosowane biblioteki</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bootstrap (biblioteka CSS)</td>
+            </tr>
+            <tr>
+                <td>BeautifulSoup (biblioteka Python, parsowania HTML i XML)</td>
+            </tr>
+            <tr>
+                <td>Requests (biblioteka Python, do wysyłania żądań HTTP)</td>
+            </tr>
+            <tr>
+                <td>Pandas (biblioteka Python)</td>
+            </tr>
+            <tr>
+                <td>JQuery (biblioteka JavaScript)</td>
+            </tr>
+            <tr>
+                <td>ChartJS (biblioteka JavaScript, tworzenie interaktywnych wykresów)</td>
+            </tr>
+        </tbody>
+    </table>
 
 {% endblock %}

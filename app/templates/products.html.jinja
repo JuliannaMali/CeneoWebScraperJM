@@ -6,14 +6,78 @@
 
 {% block content %}
 
-    {% for product in products %}
-    <div class="card mb-3" style="max-width: 18rem;">
-        <div class="card-header">{{product.product_name}}</div>
-        <div class="card-body text-success">
-            <p class="card-text">Statystyki</p>
-        </div>
-        <div class="card-footer">Przyciski</div>
-    </div>
-    {% endfor %}
+    {% for i in products%}
+    <table class="table mt-3 mb-3 col-sm-3">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Atrybuty produktu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in i.items() %}
+
+                {% if key == 'product_id'%}
+
+                <tr>
+                    <td>ID produktu</td>
+                    <td><a href="{{url_for('product', product_id = value)}}"> {{value}} </a></td>
+                </tr>
+
+                {%elif key == 'product_name'%}
+
+                <tr>
+                    <td>Nazwa produktu</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%elif key == 'opinions_count'%}
+
+                <tr>
+                    <td>Liczba opinii</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%elif key == 'pros_count'%}
+
+                <tr>
+                    <td>Liczba zalet</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%elif key == 'cons_count'%}
+
+                <tr>
+                    <td>Liczba wad</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%elif key == 'avg_rating'%}
+
+                <tr>
+                    <td>Średnia ocena</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%elif key == 'rating_distribution'%}
+
+                <tr>
+                    <td>Rozkład ocen</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%elif key == 'recommendation_distrb'%}
+
+                <tr>
+                    <td>Rozkład rekomendacji</td>
+                    <td> {{ value }} </td>
+                </tr>
+
+                {%endif%}
+
+            {% endfor %}
+        </tbody>
+    </table>
+    {%endfor%}
 
 {% endblock %}

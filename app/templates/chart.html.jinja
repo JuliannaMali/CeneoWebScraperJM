@@ -1,0 +1,84 @@
+{% extends 'base.html.jinja' %}
+
+{%block content%}
+
+<div class="row items-align-center justify-content-center">
+    <p>Udział poszczególnych rekomendacji w ogólnej liczbie opinii</p>
+    <canvas id="myChart1" class="w-75 h-50 justify-content-center"></canvas>
+
+    <p>Liczba opinii z poszczególnymi gwiazdakmi</p>
+    <canvas id="myChart2"></canvas>
+</div>
+
+<a type="button" class="btn mt-3" href="{{url_for('product', product_id=product_id)}}">Powrót</a>
+
+{%endblock%}
+
+{% block scripts%}
+
+<script>
+
+const data1 = {
+    labels: ['Polecam', 'Nie polecam'],
+    datasets:
+    [
+    {
+        label: [],
+        data: [{{recomms_good}},{{recomms_bad}}],
+        backgroundColor:
+        [
+            'rgba(255, 26, 104, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+        ],
+        borderColor:
+        [
+            'rgba(255, 26, 104, 1)',
+            'rgba(255, 206, 86, 1)',
+        ],
+    }],
+};
+
+const configure = {
+    type: 'pie',
+    data: data1
+};
+
+const myChart1 = new Chart(
+  document.getElementById('myChart1'),
+  configure
+);
+
+
+
+
+const data2 = {
+    labels:['1', '2', '3', '4', '5'],
+    datasets:
+    [{
+        label: ['Liczba opinii'],
+        data: [{{rating_1}}, {{rating_2}}, {{rating_3}}, {{rating_4}}, {{rating_5}}],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+    }]
+};
+
+const config = {
+  type: 'bar',
+  data: data2,
+  options: 
+  {
+    scales: 
+    {
+      y: {beginAtZero: true}
+    }
+  }
+};
+
+const myChart2 = new Chart(
+  document.getElementById('myChart2'),
+  config
+);
+
+</script>
+
+{% endblock %}

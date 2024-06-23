@@ -127,7 +127,63 @@ def author():
 #product
 @app.route('/product/<product_id>')
 def product(product_id):
-    return render_template('product.html.jinja', product_id = product_id)
+
+    opinions_list    = [filename.split(".")[0] for filename in os.listdir('app/data/opinions')]
+    product_opinions = []
+
+    for i in opinions_list: 
+        if i == product_id: 
+
+            with open(f"app/data/opinions/{product_id}.json", "r", encoding="UTF-8") as jfile:
+                product_opinions.append(json.load(jfile))
+
+    return render_template('product.html.jinja', product_id = product_id, product_opinions = product_opinions[0])
+
+
+#wykresy
+@app.route('/product/chart/<product_id>')
+def chart(product_id):
+
+    opinions_list    = [filename.split(".")[0] for filename in os.listdir('app/data/opinions')]
+    product_opinions = []
+
+    for i in opinions_list: 
+        if i == product_id: 
+
+            with open(f"app/data/opinions/{product_id}.json", "r", encoding="UTF-8") as jfile:
+                product_opinions.append(json.load(jfile))
+
+    recomms_good = 0
+    recomms_bad = 0
+    rating_1 = 0
+    rating_2 = 0
+    rating_3 = 0
+    rating_4 = 0
+    rating_5 = 0
+
+    for l in product_opinions[0]:
+        
+        for key, value in l.items():
+            if key == "recommendation":
+                if value == "Polecam":
+                    recomms_good += 1
+                else:
+                    recomms_bad += 1
+            if key == "rating":
+                if int(value[0]) == 5:
+                    rating_5 += 1
+                if int(value[0]) == 4:
+                    rating_4 += 1
+                if int(value[0]) == 3:
+                    rating_3 += 1
+                if int(value[0]) == 2:
+                    rating_2 += 1
+                if int(value[0]) == 1:
+                    rating_1 += 1
+
+
+
+    return render_template("chart.html.jinja", product_id = product_id, product_opinions=product_opinions[0], recomms_bad=recomms_bad, recomms_good=recomms_good, rating_1=rating_1, rating_2=rating_2, rating_3=rating_3, rating_4=rating_4, rating_5=rating_5)
 
 
 #download json
@@ -141,7 +197,7 @@ def download_json(product_id):
 def download_csv(product_id):
 
     opinions = pd.read_json(f'app/data/opinions/{product_id}.json')
-    buffer   =  io.BytesIO(opinions.to_csv(sep = ';', decimal = ',', index = False).encode())
+    buffer   = io.BytesIO(opinions.to_csv(sep = ';', decimal = ',', index = False).encode())
 
     return send_file(buffer, 'text/csv', as_attachment=True, download_name=f"{product_id}.csv")
 

@@ -7,7 +7,14 @@
 
     <link href="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
     
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
     <title>Ceneo.pl Web Scraper</title>
 </head>
 
@@ -22,17 +29,16 @@
             <div class="container-fluid custom-container">
                 <div class="row">
 
-                    <div class="col-sm-3 mt-2 d-flex justify-content-center align-items-center">
-                        <div class="w-75 list-group text-center m-auto mb-4 mt-4 shadow-lg">
+                    <div class="col-sm-2 mt-2 d-flex justify-content-center align-items-top">
+                        <div class="w-75 list-group text-center m-auto mb-4 mt-3 shadow-lg">
                             <h2 class="text-center">Spis treści:</h2>
                                 <a href="{{url_for('index')}}" class="list-group-item list-group-item-action">Strona Główna</a>
                                 <a href="{{url_for('extract')}}" class="list-group-item list-group-item-action">Ekstrakcja opinii</a>
                                 <a href="{{url_for('products')}}" class="list-group-item list-group-item-action">Produkty</a>
-                                {#<a href="{{url_for('product')}}" class="list-group-item list-group-item-action">Opinia o produkcie {{product_id}}</a>#}
                                 <a href="{{url_for('author')}}" class="list-group-item list-group-item-action">O autorze</a>                    
                         </div>
                     </div>
-                    <div class="col-sm-7 mt-2 row align-items-center">
+                    <div class="col-sm-8 mt-2 row align-items-center">
                         <h2 class="mt-3 mb-3 align-items-center">
                             {% block title %}
                             
@@ -41,6 +47,10 @@
                         {% block content %}
                             <p>To jest plik bazowy.</p>
                         {% endblock %}
+
+                        {% block scripts %}
+
+                        {% endblock%}
                     </div>
 
                 </div>
@@ -49,7 +59,7 @@
         
         
         <footer class="border-secondary bg-light-subtle rounded shadow w-50 m-auto text-center mt-4">
-            <p>Julianna Mali, Uniwersytet Ekonomiczny w Krakowie</p>
+            <p>Julianna Mali, Uniwersytet Ekonomiczny w Krakowie, 2024</p>
         </footer>
 
 

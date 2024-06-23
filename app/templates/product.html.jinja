@@ -2,12 +2,97 @@
 
 {% block content %}
 
-    <p>To jest strona z opiniami o produkcie {{product_id}}.</p>
+    <p>Opinie o produkcie {{product_id}}.</p>
+
+
+    <div class="items-align-center">
+    <input type="text" id="filter" placeholder="" class="w-50">
+    </div>
+
+    <table id='Table1' class="tablesorter items-align-top table mt-3 mb-3 bg-white">
+        <thead>
+            <tr>
+                {# {% for i in product_opinions[0]%}
+                    <th> {{i}} </th>
+                {% endfor%}  #}
+                <th>ID opinii</th>
+                <th>Autor</th>
+                <th>Rekomendacja</th>
+                <th>Ocena</th>
+                <th>Treść opinii</th>
+                <th>Zalety</th>
+                <th>Wady</th>
+                <th>Pomocna opinia</th>
+                <th>Niepomocna opinia</th>
+                <th>Data opinii</th>
+                <th>Data zakupu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for i in product_opinions%}
+                <tr>
+                    {% for value in i.items()%}
+
+                        <td>{{value[1]}}</td>
+
+                    {%endfor%}
+                </tr>
+            {%endfor%}
+        </tbody>
+
+    </table>    
+    
+
+
 
     <div class="btn-group" role="group" aria-label="Basic example">
         <a type="button" class="btn" href="{{url_for('download_json', product_id=product_id)}}">JSON</a>
         <a type="button" class="btn" href="{{url_for('download_csv', product_id=product_id)}}">CSV</a>
         <a type="button" class="btn" href="{{url_for('download_xlsx', product_id=product_id)}}">XLSX</a>
     </div>
+
+    <a type="button" class="btn mt-3" href="{{url_for('chart', product_id=product_id)}}">Wykresy</a>
     
 {% endblock %}
+
+{% block scripts%}
+
+    <script>
+
+    $(document).ready(function() {
+
+        $("#filter").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#Table1 tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+
+        //sortowanie zrobione z pomocą, bo nie umiałam, próba zrobienia tablesorterem, ale nie działało
+        $("#Table1 th").on("click", function() {
+            var column = $(this).data("column");
+            var table = $(this).parents("table").eq(0);
+            var rows = table.find("tbody tr").toArray().sort(compareRows(column));
+            this.asc = !this.asc;
+            if (!this.asc) { rows = rows.reverse(); };
+            table.children("tbody").empty().html(rows);
+        });
+
+        function compareRows(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index);
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
+        };
+        }
+
+        function getCellValue(row, index) {
+        return $(row).children("td").eq(index).text();
+        }
+
+
+    });
+
+    </script>
+
+{% endblock%}
